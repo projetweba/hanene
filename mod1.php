@@ -1,5 +1,9 @@
-<?PHP
+<?php
+session_start();
+if(isset($_SESSION['login_user']) and $_SESSION['login_user']=="admin"){
+?>
 
+<?PHP
 include "../core/LivreurC.php";
 include "../entities/livreur.php";
 ?>
@@ -118,10 +122,17 @@ if (isset($_POST['modif'])){
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/jquery.app.js"></script>
 <script src="assets/js/main.js"></script>
-
+<script src="assets/js/verif.js"></script>
 <script src="assets/plugins/morris/morris.min.js"></script>
 <script src="assets/plugins/raphael/raphael-min.js"></script>
 <script src="assets/js/dashborad2.js"></script>
 </body>
 
 </html>
+
+<?php
+}
+else{
+    header("location: login.php"); 
+}
+?>
