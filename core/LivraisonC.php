@@ -5,31 +5,36 @@ function afficherLivraison ($livraison){
 
 		echo "Identifiant de la livraison: ".$livraison->getID()."<br>";
 		echo "Identifiant du livreur: ".$livraison->getLivreur()."<br>";
-		echo "Identifiant de la commande: ".$livraison->getCommande()."<br>";
 		echo "Adresse: ".$livraison->getAdresse()."<br>";
 		echo "Ville: ".$livraison->getVille()."<br>";
 		echo "Code postal: ".$livraison->getCode()."<br>";
+		echo "Date Livraison: ".$livraison->getDate()."<br>";
+		echo "Etat de la livraison: ".$livraison->getEtat()."<br>";
 	}
 	
 	function ajouterLivraison($livraison){
-		$sql="insert into livraison (id_livraison,id_livreur,id_commande,adresse,ville,code_postal) values(:id_livraison,:id_livreur,:id_commande,:adresse,:ville,:code_postal)";
+		$sql="insert into livraison (id_livraison,id_livreur,adresse,ville,code_postal,date_livraison,etat) values(:id_livraison,:id_livreur,:adresse,:ville,:code_postal,:date_livraison,:etat)";
 		$db = config::getConnexion();
 		try{
         $req=$db->prepare($sql);
 		
+        
         $id_livraison=$livraison->getID();
         $id_livreur=$livraison->getLivreur();
-        $id_commande=$livraison->getCommande();
         $adresse=$livraison->getAdresse();
         $ville=$livraison->getVille();
         $code_postal=$livraison->getCode();
+        $date_livraison=$livraison->getDate();
+        $etat=$livraison->getEtat();
 
-	    $req->bindValue(':id_livraison',$id_livraison);
+
+		$req->bindValue(':id_livraison',$id_livraison);
 		$req->bindValue(':id_livreur',$id_livreur);
-		$req->bindValue(':id_commande',$id_commande);
 		$req->bindValue(':adresse',$adresse);
 		$req->bindValue(':ville',$ville);
 		$req->bindValue(':code_postal',$code_postal);
+		$req->bindValue(':date_livraison',$date_livraison);
+		$req->bindValue(':etat',$etat);
 		
             $req->execute();
            
@@ -68,7 +73,7 @@ function afficherLivraison ($livraison){
 	}
 
 	function modifierLivraison($livraison,$id_livraison){
-		$sql="UPDATE livraison SET id_livraison=:id_livraison_ini, id_livreur=:id_livreur,id_commande=:idcommande,adresse=:adresse,ville=:ville,code_postal=:code_postal WHERE id_livraison=:id_livraison";
+		$sql="UPDATE livraison SET id_livraison=:id_livraison_ini, id_livreur=:id_livreur,adresse=:adresse,ville=:ville,code_postal=:code_postal,date_livraison=:date_livraison,etat=:etat WHERE id_livraison=:id_livraison";
 		
 		$db = config::getConnexion();
 		//$db->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
@@ -76,17 +81,21 @@ try{
         $req=$db->prepare($sql);
 		$id_livraison_ini=$livraison->getID();
         $id_livreur=$livraison->getLivreur();
-        $id_commande=$livraison->getCommande();
         $adresse=$livraison->getAdresse();
         $ville=$livraison->getVille();
         $code_postal=$livraison->getCode();
-$datas = array(':id_livraison_ini'=>$id_livraison_ini, ':id_livraison'=>$id_livraison, ':id_livreur'=>$id_livreur,':id_commande'=>$id_commande,':adresse'=>$adresse,':ville'=>$ville,'code_postal'=>$code_postal);
+        $date_livraison=$livraison->getDate();
+        $etat=$livraison->getEtat();
+
+$datas = array(':id_livraison_ini'=>$id_livraison_ini,':id_livraison'=>$id_livraison,':id_livreur'=>$id_livreur,':adresse'=>$adresse,':ville'=>$ville,'code_postal'=>$code_postal,'date_livraison'=>$date_livraison,':etat'=>$etat);
 		$req->bindValue(':id_livraison_ini',$id_livraison_ini);
 		$req->bindValue(':id_livraison',$id_livraison);
-		$req->bindValue(':id_commande',$id_commande);
+		$req->bindValue(':id_livreur',$id_livreur);
 		$req->bindValue(':adresse',$adresse);
 		$req->bindValue(':ville',$ville);
 		$req->bindValue(':code_postal',$code_postal);
+		$req->bindValue(':date_livraison',$date_livraison);
+		$req->bindValue(':etat',$etat);
 		
             $s=$req->execute();
     }
