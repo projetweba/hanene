@@ -3,30 +3,18 @@ session_start();
 if(isset($_SESSION['login_user']) and $_SESSION['login_user']=="admin"){
 ?>
 
-<?PHP
-include "../core/LivraisonC.php";
-$livraison1C=new LivraisonC();
-$listeLivraison=$livraison1C->afficherLivraisons();
-
-?>
 <!DOCTYPE html>
 <html>
-
 
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Z'animo Livraison-ADMIN</title>
+<title>Z'animo Livreur-ADMIN</title>
 
 <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="assets/fonts/line-icons.css">
-<link rel="stylesheet" href="assets/plugins/morris/morris.css">
 <link rel="stylesheet" type="text/css" href="assets/css/main.css">
 <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
-<link rel="stylesheet" type="text/css" href="assets/css/style.css">
-<link rel="stylesheet" type="text/css" href="assets/css/meanmenu.min.css">
-<link rel="stylesheet" href="assets/plugins/morris/morris.css">
-
 </head>
 <body>
 <div class="app header-default side-nav-dark">
@@ -35,7 +23,7 @@ $listeLivraison=$livraison1C->afficherLivraisons();
 <div class="header navbar">
 <div class="header-container">
 <div class="nav-logo">
-<a href="livraison.php">
+<a href="index-2.html">
 <span class="logo">
 <img src="assets/img/zanimo-logo.png" alt="">
 </span>
@@ -52,12 +40,7 @@ $listeLivraison=$livraison1C->afficherLivraisons();
 </li>
 </ul>
 <ul class="nav-right">
-  <b id="logout"><a href="logout.php">Log Out</a></b>
-<li class="search-box">
-
-     <input  type="text" name="search_text" id="search_text" placeholder="Search by Livraison Details" class="form-control" />
-
-</li>
+	  <b id="logout"><a href="logout.php">Log Out</a></b>
 <li class="massages dropdown dropdown-animated scale-left">
 <span class="counter">3</span>
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -102,7 +85,7 @@ Danny Donovan
 <div class="media-img">
 <img src="assets/img/users/avatar-3.jpg" alt="">
 </div>
- <div class="info">
+<div class="info">
 <span class="title">
 Frank Handrics
 </span>
@@ -230,7 +213,7 @@ Frank Handrics
 <li>
 <a href="#">
 <i class="lni-user"></i>
-<span>Profile</span>
+ <span>Profile</span>
 </a>
 </li>
 <li>
@@ -259,7 +242,7 @@ Frank Handrics
 <li class="side-nav-header">
 <span>Navigation</span>
 </li>
-<li class="nav-item dropdown open">
+<li class="nav-item dropdown">
 <a href="#" class="dropdown-toggle">
 <span class="icon-holder">
 <i class="lni-dashboard"></i>
@@ -270,21 +253,14 @@ Frank Handrics
 </span>
 </a>
 <ul class="dropdown-menu sub-down">
-
 <li>
 <a href="reservation.php">Reservation</a>
 </li>
 <li>
-<a href="livreur.php">Livreur</a>
-</li>
-<li class="active">
 <a href="livraison.php">Livraison</a>
 </li>
 <li>
-<a href="commande.php">Commande</a>
-</li>
-<li>
-<a href="fidelite.php">Fidelite</a>
+<a href="livreur.php">Livreur</a>
 </li>
 </ul>
 </li>
@@ -352,7 +328,7 @@ Frank Handrics
 <span class="title">Components</span>
 <span class="arrow">
 <i class="lni-chevron-right"></i>
-</span>
+ </span>
 </a>
 <ul class="dropdown-menu sub-down">
 <li>
@@ -406,7 +382,7 @@ Frank Handrics
 </li>
 </ul>
 </li>
-<li class="nav-item dropdown">
+<li class="nav-item dropdown open">
 <a class="dropdown-toggle" href="#">
 <span class="icon-holder">
 <i class="lni-files"></i>
@@ -425,6 +401,9 @@ Frank Handrics
 </li>
 <li>
 <a href="form-validation.html">Form Validation</a>
+</li>
+<li class="active">
+<a href="form-livreur.php">Form Livreur</a>
 </li>
 </ul>
 </li>
@@ -461,7 +440,7 @@ Frank Handrics
 <li>
 <a href="charts-morris.html">Marris Chart</a>
 </li>
-<li>
+ <li>
 <a href="chartjs.html">ChartJs</a>
 </li>
 <li>
@@ -525,49 +504,72 @@ Frank Handrics
 
 
 <div class="page-container">
-
 <div class="main-content">
 <div class="container-fluid">
-
 <div class="breadcrumb-wrapper row">
 <div class="col-12 col-lg-3 col-md-6">
-<h4 class="page-title">Livraison</h4>
+<h4 class="page-title">Form Livreur</h4>
 </div>
 <div class="col-12 col-lg-9 col-md-6">
 <ol class="breadcrumb float-right">
-<li><a href="livraison.php">Livraison</a></li>
-<li class="active"> / Livraison</li>
+<li><a href="index-2.html">Forms</a></li>
+<li class="active"> / Form livreur</li>
 </ol>
 </div>
 </div>
-
+</div>
 
 <div class="container-fluid">
 <div class="row">
-<div class="col-lg-12 col-md-12 col-xs-12">
+<div class="col-12">
 <div class="card">
-<div class="card-header">
-<h4 class="card-title">Tableau des Livraisons</h4>
+<div class="card-header border-bottom">
+<h4 class="card-title">Add a new delivery</h4>
+</div>
+<div class="card-body">
+<p class="card-description">
+Delivery Form
+</p>
+<form action ="ajouterLivreur.php" method="post">
+<!--
+<div class="form-group">
+<label for="id_liv">Delivery ID</label>
+<input type="number" name="id_liv" class="form-control" id="id_liv" placeholder="Delivery ID" onblur=" verifname(this)">
+</div>-->
+
+<div class="form-group">
+<label for="prenom_liv">Nom</label>
+<input type="text" name="prenom_liv" class="form-control" id="prenom_liv" placeholder="Nom" onblur=" verifname(this)">
 </div>
 
-<div class="table-overflow">
-<table class="table table-hover table-lg">
 
-
-<div id="result"></div>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
+<div class="form-group">
+<label for="tel_liv">Telephone</label>
+<input type="tel" id="tel_liv" name="tel_liv" class="form-control" required pattern="[0-9]{8}" placeholder="veuillez saisir un numéro de 8 chiffres"> 																				
 </div>
 
+<div class="form-group">
+<label for="adresse_liv">Adress</label>
+<input type="text" name="adresse_liv" class="form-control" id="adresse_liv" placeholder="adresse" onblur=" verifname(this)">
+</div>
+
+<div class="form-group">
+<label for="mail_liv">Mail</label>
+<input type="mail" id="mail_liv" name="mail_liv" required pattern="[a-zA-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"  placeholder="mail@serveur.com"  class="form-control" >
+</div>
+
+<input type ="submit" name="send" value="Send" class="btn btn-success btn-rounded"/>
+<input type ="submit" name="cancel" value="Cancel" class="btn btn-warning btn-rounded"/>
+
+</form>
+</div>
+</div>
+</div>
 
 <footer class="content-footer">
 <div class="footer">
 <div class="copyright">
-<span>Copyright © 2019. All Right Reserved by Z'animo Shop</span>
+<span>Copyright © 2019.              All Right Reserved by Z'animo Shop</br></span>
 <span class="go-right">
 <a href="#" class="text-gray">Term &amp; Conditions</a>
 <a href="#" class="text-gray">Privacy &amp; Policy</a>
@@ -575,63 +577,24 @@ Frank Handrics
 </div>
 </div>
 </footer>
-
-</div>
-
 </div>
 </div>
-
+</div>
 <div id="preloader">
 <div class="loader" id="loader-1"></div>
 </div>
 
 
+<!--scripts-->
 <script src="assets/js/jquery-min.js"></script>
 <script src="assets/js/popper.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/jquery.app.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="assets/js/verif.js"></script>
-<script src="assets/plugins/morris/morris.min.js"></script>
-<script src="assets/plugins/raphael/raphael-min.js"></script>
-<script src="assets/js/dashborad2.js"></script>
+
 </body>
-
-
 </html>
-
-<script>
-$(document).ready(function(){
-
- load_data();
-
- function load_data(query)
- {
-  $.ajax({
-   url:"fetchLivraison.php",
-   method:"POST",
-   data:{query:query},
-   success:function(data)
-   {
-    $('#result').html(data);
-   }
-  });
- }
- $('#search_text').keyup(function(){
-  var search = $(this).val();
-  if(search != '')
-  {
-   load_data(search);
-  }
-  else
-  {
-   load_data();
-  }
- });
-});
-</script>
-
-
 <?php
 }
 else{

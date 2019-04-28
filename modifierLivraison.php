@@ -4,8 +4,8 @@ if(isset($_SESSION['login_user']) and $_SESSION['login_user']=="admin"){
 ?>
 
 <?PHP
-include "../core/LivreurC.php";
-include "../entities/livreur.php";
+include "../core/LivraisonC.php";
+include "../entities/livraison.php";
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +15,7 @@ include "../entities/livreur.php";
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Z'animo Livreur-ADMIN</title>
+<title>Z'animo Livraison-ADMIN</title>
 
 <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="assets/fonts/line-icons.css">
@@ -31,69 +31,87 @@ include "../entities/livreur.php";
 
 
 <?php
-if (isset($_GET['id_liv'])){
-	$LivreurC=new LivreurC();
-    $result=$LivreurC->recupererLivreur($_GET['id_liv']);
+if (isset($_GET['id_livraison'])){
+	$LivraisonC=new LivraisonC();
+    $result=$LivraisonC->recupererLivraison($_GET['id_livraison']);
 	foreach($result as $row){
-		$id_liv=$row['id_liv'];
-		$prenom_liv=$row['prenom_liv'];
-		$adresse_liv=$row['adresse_liv'];
-		$tel_liv=$row['tel_liv'];
-		$mail_liv=$row['mail_liv'];
+		$id_livraison=$row['id_livraison'];
+		$id_livreur=$row['id_livreur'];
+		$adresse=$row['adresse'];
+		$ville=$row['ville'];
+		$code_postal=$row['code_postal'];
+		$date_livraison=$row['date_livraison'];
 
 ?>
-
 <?PHP
 	}
 }
 if (isset($_POST['modif'])){
-	$Livreur=new livreur($_POST['id_liv'],$_POST['prenom_liv'],$_POST['adresse_liv'],$_POST['tel_liv'],$_POST['mail_liv']);
-	$LivreurC->modifierLivreur($Livreur,$_POST['id_liv_ini']);
-	echo $_POST['id_liv_ini'];
-	header('Location: livreur.php');
+	$Livraison=new livraison($_POST['id_livraison'],$_POST['id_livreur'],$_POST['adresse'],$_POST['ville'],$_POST['code_postal'],$_POST['date_livraison']);
+	$LivraisonC->modifierLivraison($Livraison,$_POST['id_livraison_ini']);
+	echo $_POST['id_livraison_ini'];
+	header('Location: livraison.php');
 }
 ?>
 
+
 <form name="hey" class="forms-sample" method="POST">
 <div class="card-header">
-<h4 class="card-title">Modifier un Livreur</h4>
+<h4 class="card-title">Modifier une Livraison</h4>
 </div>
 
 <div class="form-group">
-<label for="exampleInputName1">ID</label>
-<input type="text"  class="form-control" " name="id_liv" onblur=" verifname(this)" value="<?PHP echo $id_liv?>">
+<label for="exampleInputName1">ID Livraison</label>
+<input type="number"  class="form-control" " name="id_livraison"  value="<?PHP echo $id_livraison?>">
+</div>
+
+
+<div>
+	<label for="exampleInputEmail2">ID Livreur<br/></label>
+    <select name="id_livreur" id="id_livreur" >
+         <?php
+            $db = mysql_connect('localhost', 'root', '') or exit(mysql_error());
+            mysql_select_db('zanimobd',$db) or exit(mysql_error());
+            $sql = "SELECT id_liv FROM livreur";
+            $res = mysql_query($sql) or exit(mysql_error());
+            while($data=mysql_fetch_array($res)) {
+                    echo '<option>'.$data["id_liv"].'</option><br/>';
+                    }
+            mysql_close();
+        ?>
+    </select>
+</div>
+
+
+<div class="form-group">
+<label for="exampleInputEmail3">Adress</label>
+<input type="text" class="form-control"  name="adresse" onblur=" verifname(this)" value="<?PHP echo $adresse?>">
 </div>
 
 <div class="form-group">
-<label for="exampleInputEmail2">Nom</label>
-<input type="text" class="form-control"  name="prenom_liv" onblur=" verifname(this)" value="<?PHP echo $prenom_liv?>">
+<label for="exampleInputEmail4">Ville</label>
+<input type="text" class="form-control"  name="ville" onblur="verifname(this)" value="<?PHP echo $ville?>">
 </div>
 
 <div class="form-group">
-<label for="exampleInputEmail2">Adresse</label>
-<input type="text" class="form-control"  name="adresse_liv" onblur=" verifname(this)" value="<?PHP echo $adresse_liv?>">
+<label for="exampleInputEmail3">Code Postal</label>
+<input type="number" class="form-control"  name="code_postal" onblur=" verifname(this)" value="<?PHP echo $code_postal?>">
 </div>
 
 <div class="form-group">
-<label for="exampleInputEmail3">Tel</label>
-<input type="tel" id="tel_liv" name="tel_liv" class="form-control" required pattern="[0-9]{8}" title="veuillez saisir un numéro de 8 chiffres" value="<?PHP echo $tel_liv?>"> </div>
-
-<div class="form-group">
-<label for="exampleInputEmail4">Mail</label>
-<input type="mail" name="mail_liv" class="form-control"  required pattern="[a-zA-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="mail@serveur.com" value="<?PHP echo $mail_liv?>">
+<label for="exampleInputEmail4">Date Livraison</label>
+<input type="date" class="form-control"  name="date_livraison" onblur=" verifname(this)" value="<?PHP echo $date_livraison?>">
 </div>
+
+
 
 <button type="submit" name="modif"   value="modif"  class="btn btn-common mr-3">modifier</button>
 <button class="btn btn-common mr-3">Cancel</button>
 
 <div>
-<input  type="hidden" name="id_liv_ini" value="<?PHP echo $_GET['id_liv'];?>">
+<input  type="hidden" name="id_livraison_ini" value="<?PHP echo $_GET['id_livraison'];?>">
 </div>
 </form>
-
-
-
-
 <footer class="content-footer">
 <div class="footer">
 <div class="copyright">
@@ -128,6 +146,7 @@ if (isset($_POST['modif'])){
 </body>
 
 </html>
+
 
 <?php
 }

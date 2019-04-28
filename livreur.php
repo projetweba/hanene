@@ -1,3 +1,7 @@
+<?php
+session_start();
+if(isset($_SESSION['login_user']) and $_SESSION['login_user']=="admin"){
+?>
 
 <!DOCTYPE html>
 <html>
@@ -42,6 +46,7 @@
 </li>
 </ul>
 <ul class="nav-right">
+  <b id="logout"><a href="logout.php">Log Out</a></b>
 <li class="search-box">
  
      <input  type="text" name="search_text" id="search_text" placeholder="Search by DeliveryMan Details" class="form-control" />
@@ -548,7 +553,7 @@ Frank Handrics
 </div>-->
 
 <div>
-    <form action = "form-livreur.html" method ="get">
+    <form action = "form-livreur.php" method ="get">
         <input  type = "submit" name = "ajouter" value="Add DeliveryMan" class="btn btn-info btn-rounded">
     </form></br></br>
 </div>
@@ -645,3 +650,10 @@ $(document).ready(function(){
  });
 });
 </script>
+
+<?php
+}
+else{
+    header("location: login.php"); 
+}
+?>
